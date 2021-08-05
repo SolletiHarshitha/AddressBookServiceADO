@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace AddressBookService
 {
-    class AddressBookRepository
+    public class AddressBookRepository
     {
         public static string connectionString = @"Data Source=(localdb)\ProjectsV13;Initial Catalog=AddressBookService;";
         SqlConnection connection = new SqlConnection(connectionString);
 
         //Retrieve all data from AddressBook Table
-        public void GetAllEmployee()
+        public bool GetAllEmployee()
         {
             try
             {
@@ -50,10 +50,13 @@ namespace AddressBookService
                     }
                     dataReader.Close();
                 }
+                return true;
+                
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                return false;
             }
             finally
             {
