@@ -183,6 +183,7 @@ namespace AddressBookService
             {
                 using(this.connection)
                 {
+                    //Adding contact using stored procedure
                     SqlCommand command = new SqlCommand("dbo.AddContact", this.connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@FirstName", details.FirstName);
@@ -195,7 +196,7 @@ namespace AddressBookService
                     command.Parameters.AddWithValue("@Email", details.Email);
                     command.Parameters.AddWithValue("@AddressBookName", details.AddressBookName);
                     command.Parameters.AddWithValue("@RelationType", details.ContactType);
-                    this.connection.Open();
+                    this.connection.Open(); //Opening the connection
                     var result = command.ExecuteNonQuery();
                     if (result != 0)
                         return true;
