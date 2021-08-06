@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AddressBookService
 {
@@ -19,7 +20,12 @@ namespace AddressBookService
             details.Email = "kiranmayi@gmail.com";
             details.ContactType = "Professsion";
             details.AddressBookName = "Office";
-            repository.AddContact(details);
+            bool result =repository.AddContact(details);
+            if(result)
+                Console.WriteLine("Contact added successfully");
+            else
+                Console.WriteLine("Contact not added");
+            
         }
     }
 }
