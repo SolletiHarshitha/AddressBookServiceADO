@@ -25,7 +25,15 @@ namespace AddressBookService
                 Console.WriteLine("Contact added successfully");
             else
                 Console.WriteLine("Contact not added");
-            
+
+            ThreadOperations threadOperations = new ThreadOperations();
+            List<ContactDetails> contactList = new List<ContactDetails>();
+            contactList.Add(details);
+
+            //Add list of contacts to DB without thread
+            threadOperations.AddContactListToDBWithoutThread(contactList);
+            //Add list of contacts to DB with thread
+            threadOperations.AddContactListToDBWithThread(contactList);
         }
     }
 }
