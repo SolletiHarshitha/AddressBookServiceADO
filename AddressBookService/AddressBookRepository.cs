@@ -140,34 +140,57 @@ namespace AddressBookService
             {
                 this.connection.Close(); //closing the connection
             }
-        } 
+        }
 
         public void CountOfContacts()
         {
             try
             {
-                using(this.connection)
+                using (this.connection)
                 {
-                    //Query to perform
-                    string query = @"select City,COUNT(City) from Contact_Person GROUP BY City;";
-                    SqlCommand command = new SqlCommand(query, this.connection);
-                    this.connection.Open(); //Opening the connection
-                    SqlDataReader dataReader = command.ExecuteReader();
-                    //Checking if the table has data
-                    if (dataReader.HasRows)
+                    Console.WriteLine("1.Count of contacts by City\n2.Count of contacts by State");
+                    int option = Convert.ToInt32(Console.ReadLine());
+                    this.connection.Open();//Opening the connection
+                    switch (option)
                     {
-                        while (dataReader.Read())
-                        {
-                            Console.WriteLine(dataReader.GetString(0)+" "+dataReader.GetInt32(1)+"\n");
-                        }
-                    }  
-                    else
-                        Console.WriteLine("No data found");
-                    dataReader.Close();
+                        case 1:
+                            //Query to perform
+                            string query = @"select City,COUNT(City) as Count from Contact_Person GROUP BY City;";
+                            SqlCommand command = new SqlCommand(query, this.connection);
+                            SqlDataReader dataReader = command.ExecuteReader();
+                            //Checking if the table has data
+                            if (dataReader.HasRows)
+                            {
+                                while (dataReader.Read())
+                                {
+                                    Console.WriteLine(dataReader.GetString(0) + " " + dataReader.GetInt32(1) + "\n");
+                                }
+                            }
+                            else
+                                Console.WriteLine("No data found");
+                            dataReader.Close();
+                            break;
+                        case 2:
+                            //Query to perform
+                            string query2 = @"select State,COUNT(State) as Count from Contact_Person GROUP BY State;";
+                            SqlCommand command2 = new SqlCommand(query2, this.connection);
+                            SqlDataReader dataReader2 = command2.ExecuteReader();
+                            //Checking if the table has data
+                            if (dataReader2.HasRows)
+                            {
+                                while (dataReader2.Read())
+                                {
+                                    Console.WriteLine(dataReader2.GetString(0) + " " + dataReader2.GetInt32(1) + "\n");
+                                }
+                            }
+                            else
+                                Console.WriteLine("No data found");
+                            dataReader2.Close();
+                            break;
+                    }
                 }
-
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
@@ -181,7 +204,7 @@ namespace AddressBookService
         {
             try
             {
-                using(this.connection)
+                using (this.connection)
                 {
                     //Adding contact using stored procedure
                     SqlCommand command = new SqlCommand("dbo.AddContact", this.connection);
